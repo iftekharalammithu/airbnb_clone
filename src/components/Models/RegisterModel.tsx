@@ -5,12 +5,21 @@ import React, { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Models from "./Models";
 import Heading from "../Heading";
+import Input from "../Input/Input";
+import toast from "react-hot-toast";
+import Button from "../Button";
+import { FcGoogle } from "react-icons/fc";
+import { AiFillGithub } from "react-icons/ai";
 
 const RegisterModel = () => {
   const { onClose, isOpen } = useRegisterModel();
   const [isLoading, setIsLoading] = useState(false);
 
-  const { register, handleSubmit, formState } = useForm<FieldValues>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FieldValues>({
     defaultValues: {
       name: "",
       email: "",
@@ -25,8 +34,8 @@ const RegisterModel = () => {
       .then(() => {
         onClose();
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
+        toast.error("Something went wrong");
       })
       .finally(() => {
         setIsLoading(false);
@@ -35,7 +44,67 @@ const RegisterModel = () => {
 
   const bodyCountent = (
     <div className=" flex flex-col gap-4">
-      <Heading></Heading>
+      <Heading
+        title="Welcolme To Airbnb"
+        subtitle="Create a new account"
+      ></Heading>
+      <Input
+        id="email"
+        label="Email"
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required
+      ></Input>
+      <Input
+        id="Name"
+        label="Name"
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required
+      ></Input>
+      <Input
+        id="password"
+        label="Password"
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required
+      ></Input>
+    </div>
+  );
+
+  const footerContent = (
+    <div className=" flex flex-col gap-4 mt-3">
+      <hr />
+      <Button
+        outline
+        label="Continue With Google"
+        icon={FcGoogle}
+        onClick={() => {
+          console.log("google");
+        }}
+      ></Button>
+      <Button
+        outline
+        label="Continue With Github"
+        icon={AiFillGithub}
+        onClick={() => {
+          console.log("google");
+        }}
+      ></Button>
+      <div className=" text-neutral-500 text-center mt-4 font-light">
+        <div className=" flex flex-row items-center gap-2 justify-center">
+          <div>Already have an account?</div>
+          <div
+            onClick={onClose}
+            className=" text-neutral-800 cursor-pointer hover:underline"
+          >
+            Log In
+          </div>
+        </div>
+      </div>
     </div>
   );
 
@@ -48,6 +117,7 @@ const RegisterModel = () => {
       onClose={onClose}
       onSubmit={handleSubmit(onSubmit)}
       body={bodyCountent}
+      footer={footerContent}
     ></Models>
   );
 };

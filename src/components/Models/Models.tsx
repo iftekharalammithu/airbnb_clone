@@ -12,8 +12,8 @@ interface ModelsProps {
   footer?: React.ReactElement;
   actionLabel: string;
   disable: boolean;
-  secondaryAction: () => void;
-  secondaryActionLabel: string;
+  secondaryAction?: () => void;
+  secondaryActionLabel?: string;
 }
 
 const Models: React.FC<ModelsProps> = ({
@@ -100,6 +100,7 @@ const Models: React.FC<ModelsProps> = ({
                     onClick={handleSubmit}
                   ></Button>
                 </div>
+                {footer}
               </div>
             </div>
           </div>
