@@ -1,6 +1,5 @@
 "use client";
-import useRegisterModel from "@/hooks/useRegisterModel";
-import axios from "axios";
+
 import React, { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Models from "./Models";
@@ -10,9 +9,13 @@ import toast from "react-hot-toast";
 import Button from "../Button";
 import { FcGoogle } from "react-icons/fc";
 import { AiFillGithub } from "react-icons/ai";
+import useLoginModel from "@/hooks/useLoginModel";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
-const RegisterModel = () => {
-  const { onClose, isOpen } = useRegisterModel();
+const LoginModel = () => {
+  const router = useRouter();
+  const { onClose, isOpen } = useLoginModel();
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -21,7 +24,6 @@ const RegisterModel = () => {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      name: "",
       email: "",
       password: "",
     },
@@ -29,25 +31,25 @@ const RegisterModel = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
-    axios
-      .post("/api/register", data)
-      .then(() => {
+    signIn("credentials", {
+      ...data,
+      redirect: false,
+    }).then((callback) => {
+      setIsLoading(false);
+
+      if (callback?.ok) {
+        toast.success("Logged In");
+        router.refresh();
         onClose();
-      })
-      .catch(() => {
+      } else {
         toast.error("Something went wrong");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+      }
+    });
   };
 
   const bodyCountent = (
     <div className=" flex flex-col gap-4">
-      <Heading
-        title="Welcolme To Airbnb"
-        subtitle="Create a new account"
-      ></Heading>
+      <Heading title="Welcolme Back" subtitle="Login to your account"></Heading>
       <Input
         id="email"
         label="Email"
@@ -56,14 +58,7 @@ const RegisterModel = () => {
         errors={errors}
         required
       ></Input>
-      <Input
-        id="name"
-        label="Name"
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-        required
-      ></Input>
+
       <Input
         id="password"
         label="Password"
@@ -113,7 +108,7 @@ const RegisterModel = () => {
     <Models
       disable={isLoading}
       isOpen={isOpen}
-      title="Register"
+      title="Login"
       actionLabel="Continue"
       onClose={onClose}
       onSubmit={handleSubmit(onSubmit)}
@@ -123,4 +118,4 @@ const RegisterModel = () => {
   );
 };
 
-export default RegisterModel;
+export default LoginModel;

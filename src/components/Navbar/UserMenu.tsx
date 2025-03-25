@@ -4,9 +4,11 @@ import { AiOutlineMenu } from "react-icons/ai";
 import Avatar from "../Avatar";
 import MenuItem from "./MenuItem";
 import useRegisterModel from "@/hooks/useRegisterModel";
+import useLoginModel from "@/hooks/useLoginModel";
 
 const UserMenu = () => {
   const registerModel = useRegisterModel();
+  const loginModel = useLoginModel();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -37,8 +39,11 @@ const UserMenu = () => {
         <div className=" absolute rounded-xl shadow-md w-[40vw] md:w-3/4 bg-white overflow-hidden ring-0 top-12 text-sm">
           <div className=" flex flex-col cursor-pointer">
             <>
-              <MenuItem onclick={() => {}} label="Login"></MenuItem>
-              <MenuItem onclick={registerModel.onOpen} label="Sign up"></MenuItem>
+              <MenuItem onclick={loginModel.onOpen} label="Login"></MenuItem>
+              <MenuItem
+                onclick={registerModel.onOpen}
+                label="Sign up"
+              ></MenuItem>
             </>
           </div>
         </div>
