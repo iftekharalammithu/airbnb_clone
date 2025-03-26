@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import Button from "../Button";
 import { FcGoogle } from "react-icons/fc";
 import { AiFillGithub } from "react-icons/ai";
+import { signIn } from "next-auth/react";
 
 const RegisterModel = () => {
   const { onClose, isOpen } = useRegisterModel();
@@ -84,7 +85,7 @@ const RegisterModel = () => {
         label="Continue With Google"
         icon={FcGoogle}
         onClick={() => {
-          console.log("google");
+          signIn("google");
         }}
       ></Button>
       <Button
@@ -92,7 +93,7 @@ const RegisterModel = () => {
         label="Continue With Github"
         icon={AiFillGithub}
         onClick={() => {
-          console.log("google");
+          toast.error("Github Not implemented");
         }}
       ></Button>
       <div className=" text-neutral-500 text-center mt-4 font-light">

@@ -7,6 +7,7 @@ import RegisterModel from "@/components/Models/RegisterModel";
 import ToasterProvider from "@/Provider/ToasterProvider";
 import LoginModel from "@/components/Models/LoginModel";
 import getCurrentUser from "./actions/getCurrentUser";
+import { SafeUser } from "@/types";
 
 export const font = Nunito({
   subsets: ["latin"],
@@ -22,7 +23,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const currentUser = await getCurrentUser();
+  const currentUser = (await getCurrentUser()) as SafeUser | null;
   return (
     <html lang="en">
       <body className={font.className}>

@@ -5,8 +5,14 @@ import Avatar from "../Avatar";
 import MenuItem from "./MenuItem";
 import useRegisterModel from "@/hooks/useRegisterModel";
 import useLoginModel from "@/hooks/useLoginModel";
+import { signOut } from "next-auth/react";
+import { SafeUser } from "@/types";
 
-const UserMenu = () => {
+interface UserMenuProps {
+  currentUser?: SafeUser | null;
+}
+
+const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const registerModel = useRegisterModel();
   const loginModel = useLoginModel();
 
@@ -31,20 +37,31 @@ const UserMenu = () => {
         >
           <AiOutlineMenu></AiOutlineMenu>
           <div className=" hidden md:block">
-            <Avatar></Avatar>
+            <Avatar src={currentUser?.image || ""}></Avatar>
           </div>
         </div>
       </div>
       {isOpen && (
         <div className=" absolute rounded-xl shadow-md w-[40vw] md:w-3/4 bg-white overflow-hidden ring-0 top-12 text-sm">
           <div className=" flex flex-col cursor-pointer">
-            <>
-              <MenuItem onclick={loginModel.onOpen} label="Login"></MenuItem>
-              <MenuItem
-                onclick={registerModel.onOpen}
-                label="Sign up"
-              ></MenuItem>
-            </>
+            {currentUser ? (
+              <>
+                <MenuItem onclick={() => {}} label="My Trips"></MenuItem>
+                <MenuItem onclick={() => {}} label="Favorites"></MenuItem>
+                <MenuItem onclick={() => {}} label="Reservations"></MenuItem>
+                <MenuItem onclick={() => {}} label="Properties"></MenuItem>
+                <MenuItem onclick={() => {}} label="Airbnb My Home"></MenuItem>
+                <MenuItem onclick={() => signOut()} label="Logout"></MenuItem>
+              </>
+            ) : (
+              <>
+                <MenuItem onclick={loginModel.onOpen} label="Login"></MenuItem>
+                <MenuItem
+                  onclick={registerModel.onOpen}
+                  label="Sign up"
+                ></MenuItem>
+              </>
+            )}
           </div>
         </div>
       )}
