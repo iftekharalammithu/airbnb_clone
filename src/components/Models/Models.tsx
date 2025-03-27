@@ -11,7 +11,7 @@ interface ModelsProps {
   body?: React.ReactElement;
   footer?: React.ReactElement;
   actionLabel: string;
-  disable: boolean;
+  disable?: boolean;
   secondaryAction?: () => void;
   secondaryActionLabel?: string;
 }

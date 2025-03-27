@@ -8,6 +8,7 @@ import ToasterProvider from "@/Provider/ToasterProvider";
 import LoginModel from "@/components/Models/LoginModel";
 import getCurrentUser from "./actions/getCurrentUser";
 import { SafeUser } from "@/types";
+import RentModel from "@/components/Models/RentModel";
 
 export const font = Nunito({
   subsets: ["latin"],
@@ -29,6 +30,7 @@ export default async function RootLayout({
       <body className={font.className}>
         <ClientOnly>
           <ToasterProvider></ToasterProvider>
+          <RentModel></RentModel>
           <RegisterModel></RegisterModel>
           <LoginModel></LoginModel>
           <Navbar currentUser={currentUser}></Navbar>

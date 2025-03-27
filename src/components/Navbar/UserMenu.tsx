@@ -7,6 +7,7 @@ import useRegisterModel from "@/hooks/useRegisterModel";
 import useLoginModel from "@/hooks/useLoginModel";
 import { signOut } from "next-auth/react";
 import { SafeUser } from "@/types";
+import useRentModel from "@/hooks/useRentModel";
 
 interface UserMenuProps {
   currentUser?: SafeUser | null;
@@ -15,6 +16,7 @@ interface UserMenuProps {
 const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const registerModel = useRegisterModel();
   const loginModel = useLoginModel();
+  const rentModel = useRentModel();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -22,11 +24,18 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
     setIsOpen((prev) => !prev);
   }, []);
 
+  const onRent = useCallback(() => {
+    if (!currentUser) {
+      return loginModel.onOpen();
+    }
+    rentModel.onOpen();
+  }, [currentUser, loginModel, rentModel]);
+
   return (
     <div className=" relative ">
       <div className=" flex flex-row items-center gap-3">
         <div
-          onClick={() => {}}
+          onClick={onRent}
           className=" hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer"
         >
           Airbnb Your Home
@@ -50,7 +59,10 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
                 <MenuItem onclick={() => {}} label="Favorites"></MenuItem>
                 <MenuItem onclick={() => {}} label="Reservations"></MenuItem>
                 <MenuItem onclick={() => {}} label="Properties"></MenuItem>
-                <MenuItem onclick={() => {}} label="Airbnb My Home"></MenuItem>
+                <MenuItem
+                  onclick={rentModel.onOpen}
+                  label="Airbnb My Home"
+                ></MenuItem>
                 <MenuItem onclick={() => signOut()} label="Logout"></MenuItem>
               </>
             ) : (

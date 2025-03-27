@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Models from "./Models";
 import Heading from "../Heading";
@@ -12,9 +12,12 @@ import { AiFillGithub } from "react-icons/ai";
 import useLoginModel from "@/hooks/useLoginModel";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import useRegisterModel from "@/hooks/useRegisterModel";
 
 const LoginModel = () => {
   const router = useRouter();
+  const loginModel = useLoginModel();
+  const registerModel = useRegisterModel();
   const { onClose, isOpen } = useLoginModel();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -46,6 +49,11 @@ const LoginModel = () => {
       }
     });
   };
+
+  const toggle = useCallback(() => {
+    loginModel.onClose();
+    registerModel.onOpen();
+  }, [loginModel, registerModel]);
 
   const bodyCountent = (
     <div className=" flex flex-col gap-4">
@@ -94,7 +102,7 @@ const LoginModel = () => {
         <div className=" flex flex-row items-center gap-2 justify-center">
           <div> Create An Account</div>
           <div
-            onClick={onClose}
+            onClick={toggle}
             className=" text-neutral-800 cursor-pointer hover:underline"
           >
             Sign Up
