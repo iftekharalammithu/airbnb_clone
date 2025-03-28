@@ -90,7 +90,7 @@ const Models: React.FC<ModelsProps> = ({
                     <Button
                       outline
                       disable={disable}
-                      label={"sdfd"}
+                      label={"Back"}
                       onClick={handleSeacondaryAction}
                     ></Button>
                   )}

@@ -16,3 +16,10 @@ body,
   font-weight: 600;
   font-style: normal;
 }
+
+.leaflet-bottom,
+.leaflet-control,
+.leaflet-pane,
+.leaflet-top {
+  z-index: 0 !important;
+}

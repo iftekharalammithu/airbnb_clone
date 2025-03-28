@@ -6,6 +6,8 @@ import Heading from "../Heading";
 import { categories } from "../Navbar/Categories";
 import CategoryInput from "../Input/CategoryInput";
 import { FieldValues, useForm } from "react-hook-form";
+import CountrySelect from "../Input/CountrySelect";
+import dynamic from "next/dynamic";
 
 enum STEPS {
   CATEGORY = 0,
@@ -41,8 +43,14 @@ const RentModel = () => {
   });
 
   const category = watch("category");
+  const location = watch("location");
 
-  const setCustomValue = (id: string, value: any) => {
+  const Map = useMemo(
+    () => dynamic(() => import("../Map/Map"), { ssr: false }),
+    [location]
+  );
+
+  const setCustomValue = (id: string, value: string) => {
     setValue(id, value, {
       shouldValidate: true,
       shouldDirty: true,
@@ -74,7 +82,7 @@ const RentModel = () => {
     return "Back";
   }, [step]);
 
-  const bodyContent = (
+  let bodyContent = (
     <div className=" flex flex-col gap-8">
       <Heading
         title="Which of these best describes your home?"
@@ -97,14 +105,30 @@ const RentModel = () => {
     </div>
   );
 
+  if (step === STEPS.LOCATION) {
+    bodyContent = (
+      <div className=" flex flex-col gap-4">
+        <Heading
+          title="Which ofthese best Describes your Places?"
+          subtitle="Pick a Category"
+        ></Heading>
+        <CountrySelect
+          onChange={(value) => setCustomValue("location", value)}
+          value={location}
+        ></CountrySelect>
+        <Map center={location?.latlng}></Map>
+      </div>
+    );
+  }
+
   return (
     <Models
       isOpen={rentModel.isOpen}
       onClose={rentModel.onClose}
+      onSubmit={onNext}
       actionLabel={actionLabel}
       secondaryActionLabel={secondaryActionLabel}
       secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
-      onSubmit={rentModel.onClose}
       title="Airbnb your home"
       body={bodyContent}
     ></Models>
