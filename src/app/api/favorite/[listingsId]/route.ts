@@ -3,7 +3,7 @@ import prisma from "@/libs/prismadb";
 import { NextResponse } from "next/server";
 
 interface IParams {
-  listingId?: string;
+  listingsId?: string;
 }
 
 export async function POST(request: Request, { params }: { params: IParams }) {
@@ -12,15 +12,15 @@ export async function POST(request: Request, { params }: { params: IParams }) {
   if (!currentUser) {
     return NextResponse.error();
   }
-  const { listingId } = params;
+  const { listingsId } = params;
 
-  if (!listingId || typeof listingId !== "string") {
+  if (!listingsId || typeof listingsId !== "string") {
     throw new Error("Invalid ID");
   }
 
   const favoriteId = [...(currentUser.favoriteIds || [])];
 
-  favoriteId.push(listingId);
+  favoriteId.push(listingsId);
 
   const user = await prisma.user.update({
     where: {
@@ -43,13 +43,13 @@ export async function DELETE(
   if (!currentUser) {
     return NextResponse.error();
   }
-  const { listingId } = params;
-  if (!listingId || typeof listingId !== "string") {
+  const { listingsId } = params;
+  if (!listingsId || typeof listingsId !== "string") {
     throw new Error("Invalid ID");
   }
 
   let favoriteIds = [...(currentUser.favoriteIds || [])];
-  favoriteIds = favoriteIds.filter((id) => id !== listingId);
+  favoriteIds = favoriteIds.filter((id) => id !== listingsId);
 
   const user = await prisma.user.update({
     where: {
