@@ -5,8 +5,7 @@ import ListingInfo from "@/components/Listings/ListingInfo";
 import ListingReservation from "@/components/Listings/ListingReservation";
 import { categories } from "@/components/Navbar/Categories";
 import useLoginModel from "@/hooks/useLoginModel";
-import { SafeListing, SafeUser } from "@/types";
-import { Reservation } from "@prisma/client";
+import { SafeListing, SafeReservation, SafeUser } from "@/types";
 import axios from "axios";
 import { differenceInCalendarDays, eachDayOfInterval } from "date-fns";
 import { useRouter } from "next/navigation";
@@ -21,7 +20,7 @@ const InitialDateRange = {
 };
 
 interface ListingClientPrpos {
-  reservations?: Reservation[];
+  reservations?: SafeReservation[];
   listing: SafeListing & {
     user: SafeUser;
   };
@@ -60,7 +59,7 @@ const ListingClient: React.FC<ListingClientPrpos> = ({
     }
     setIsLoading(true);
     axios
-      .post("/api/resevations", {
+      .post("/api/reservations", {
         totalPrice,
         startDate: dateRange.startDate,
         endDate: dateRange.endDate,
@@ -69,7 +68,7 @@ const ListingClient: React.FC<ListingClientPrpos> = ({
       .then(() => {
         toast.success("Reservation created successfully");
         setDateRange(InitialDateRange);
-        router.refresh();
+        router.push("/trips");
       })
       .catch(() => {
         toast.error("Something went wrong");
@@ -86,7 +85,7 @@ const ListingClient: React.FC<ListingClientPrpos> = ({
         dateRange.startDate
       );
       if (dayCount && listing.price) {
-        setTotalPrice((dayCount + 1) * listing.price);
+        setTotalPrice(dayCount * listing.price);
       } else {
         setTotalPrice(listing.price);
       }

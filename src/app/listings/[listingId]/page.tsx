@@ -4,6 +4,8 @@ import ClientOnly from "@/components/ClientOnly";
 import EmptyState from "@/components/EmptyState";
 import React from "react";
 import ListingClient from "./ListingClient";
+import getReservations from "@/app/actions/getReservations";
+import { SafeReservation, SafeUser } from "@/types";
 
 interface IParams {
   listingId?: string;
@@ -12,6 +14,9 @@ interface IParams {
 const Page = async ({ params }: { params: IParams }) => {
   const listing = await getListingById(params);
   const currentUser = await getCurrentUser();
+  const reservation = (await getReservations(params)) as
+    | SafeReservation[]
+    | undefined;
 
   if (!listing) {
     return (
@@ -25,7 +30,8 @@ const Page = async ({ params }: { params: IParams }) => {
     <ClientOnly>
       <ListingClient
         listing={listing}
-        currentUser={currentUser}
+        reservations={reservation}
+        currentUser={currentUser as SafeUser | null}
       ></ListingClient>
     </ClientOnly>
   );
