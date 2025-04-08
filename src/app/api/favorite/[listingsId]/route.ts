@@ -12,7 +12,7 @@ export async function POST(request: Request, { params }: { params: IParams }) {
   if (!currentUser) {
     return NextResponse.error();
   }
-  const { listingsId } = params;
+  const { listingsId } = await params;
 
   if (!listingsId || typeof listingsId !== "string") {
     throw new Error("Invalid ID");

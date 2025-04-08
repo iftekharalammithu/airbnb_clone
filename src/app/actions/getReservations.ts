@@ -17,7 +17,7 @@ interface Query {
 
 export default async function getReservations(params: IParams) {
   try {
-    const { listingId, userId, authorId } = params;
+    const { listingId, userId, authorId } = await params;
 
     // Use the defined Query type instead of any
     const query: Query = {};

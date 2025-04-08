@@ -1,12 +1,17 @@
 import ClientOnly from "@/components/ClientOnly";
 import Container from "@/components/Container";
 import EmptyState from "@/components/EmptyState";
-import getLinstings from "./actions/getLintings";
 import ListingCard from "@/components/Listings/ListingCard";
 import getCurrentUser from "./actions/getCurrentUser";
+import getListings, { IListingsParams } from "./actions/getListings";
 
-export default async function Home() {
-  const listings = await getLinstings();
+interface HomePorops {
+  searchParams: IListingsParams;
+}
+
+export default async function Home({ searchParams }: HomePorops) {
+  const listings = await getListings(searchParams);
+  console.log(listings);
   const currentUsr = await getCurrentUser();
 
   if (listings.length === 0) {
