@@ -10,6 +10,7 @@ import qs from "query-string";
 import { formatISO } from "date-fns";
 import Heading from "../Heading";
 import Calendar from "../Input/Calendar";
+import Counter from "../Input/Counter";
 
 enum STEPS {
   LOCATION = 0,
@@ -137,14 +138,45 @@ const SearchModel = () => {
     );
   }
 
+  if (step === STEPS.INFO) {
+    bodyContent = (
+      <div className=" flex flex-col gap-8">
+        <Heading
+          title="More Information"
+          subtitle="Find your perfect place"
+        ></Heading>
+        <Counter
+          title="Guests"
+          subtitle="How many guests are coming?"
+          value={guestCount}
+          onChange={(value) => setGuestCount(value)}
+        ></Counter>
+        <Counter
+          title="Room"
+          subtitle="How many Room do you have?"
+          value={roomCount}
+          onChange={(value) => setroomCount(value)}
+        ></Counter>
+        <Counter
+          title="Bathroom"
+          subtitle="How many Bathroom do you have?"
+          value={bathroomCount}
+          onChange={(value) => setbathroomCount(value)}
+        ></Counter>
+      </div>
+    );
+  }
+
   return (
     <Models
       isOpen={searchModel.isOpen}
       onClose={searchModel.onClose}
-      onSubmit={searchModel.onOpen}
+      onSubmit={onSubmit}
       title="Filters"
-      actionLabel="Search"
+      actionLabel={actionLabel}
       body={bodyContent}
+      secondaryAction={step === STEPS.LOCATION ? undefined : onBack}
+      secondaryActionLabel={secondaryActionLabel}
     ></Models>
   );
 };
