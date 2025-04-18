@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏠 Airbnb Clone
 
-## Getting Started
+A full-stack Airbnb clone built with modern technologies, allowing users to book accommodations and hosts to list their properties.
 
-First, run the development server:
+![Airbnb Clone](public/airbnbhome.PNG)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 🔐 User Authentication (Email/Password, Google, Github)
+- 🏡 Property Listings with Advanced Filtering
+- 📍 Interactive Map Integration
+- 📸 Image Upload with Cloudinary
+- 💳 Booking System
+- 🌍 Location Selection with World Countries
+- 🎨 Modern UI/UX Design
+- 📱 Fully Responsive
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Frontend:**
 
-## Learn More
+  - Next.js 13+ (App Router)
+  - React
+  - Tailwind CSS
+  - Zustand (State Management)
 
-To learn more about Next.js, take a look at the following resources:
+- **Backend:**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  - Next.js API Routes
+  - Prisma (ORM)
+  - MongoDB
+  - Cloudinary
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Authentication:**
+  - NextAuth.js
+  - Google OAuth
+  - Github OAuth
 
-## Deploy on Vercel
+Follow on social media:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+[<img src="https://user-images.githubusercontent.com/74038190/235294011-b8074c31-9097-4a65-a594-4151b58743a8.gif" width="50">
+](https://x.com/M1thuChowdhury)
+[<img src="https://user-images.githubusercontent.com/74038190/235294012-0a55e343-37ad-4b0f-924f-c8431d9d2483.gif" width="50">
+](https://www.linkedin.com/in/iftekharalammithu/)
+[<img src="https://user-images.githubusercontent.com/74038190/235294013-a33e5c43-a01c-43f6-b44d-a406d8b4ab75.gif" width="50">
+](https://www.instagram.com/iftekharalammithu/)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+<div style="text-align: center;">
+  <a href="https://www.buymeacoffee.com/iftekharalammithu">
+    <img src="https://media.giphy.com/media/o7RZbs4KAA6tvM4H6j/giphy.gif" style=" display: block; margin: auto;" width="150">
+  </a>
+</div>

@@ -11,7 +11,7 @@ interface HomePorops {
 
 export default async function Home({ searchParams }: HomePorops) {
   const listings = await getListings(searchParams);
-  console.log(listings);
+  // console.log(listings);
   const currentUsr = await getCurrentUser();
 
   if (listings.length === 0) {
